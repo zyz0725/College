@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.PostDAO">
+
+
+    <!-- <select id="queryAllPosts" resultType="Post">
+        select * from bbs_post where topic_id=#{topic_id} limit #{begin},10
+    </select> -->
+	
+	<select id="countAllPosts" resultType="java.lang.Integer">
+		select count(*) from bbs_post where topic_id=#{topic_id}
+	</select>
+	
+	<resultMap type="entity.Post" id="qp">
+		<id column="p_id" property="post_id"/>
+		<result column="p_pushtime" property="post_pushtime"/>
+		<result column="p_content" property="post_content"/>
+		<result column="p_username" property="user_name"/>
+		<result column="p_topic_id" property="topic_id"/>
+		<result column="p_zan" property="zan"/>
+		<collection property="replys" ofType="entity.Reply">
+			<id column="r_id" property="reply_id"/>
+			<result column="r_content" property="reply_content"/>
+			<result column="r_reply_time" property="reply_time"/>
+			<result column="r_username" property="user_name"/>
+			<result column="r_post_id" property="post_id"/>
+		</collection>
+	</resultMap> 
+	<select id="queryPostsByPage" resultMap="qp">
+		select  
+		bp.post_id p_id,bp.post_pushtime p_pushtime,bp.post_content p_content,bp.user_name p_username,bp.topic_id p_topic_id,bp.zan p_zan,
+		br.reply_id r_id,br.reply_content r_content,br.reply_time r_reply_time,br.user_name r_username,br.post_id r_post_id 
+		from bbs_post bp 
+		LEFT JOIN bbs_reply br 
+		on bp.post_id=br.post_id 
+		<!-- where bp.topic_id=#{topicId}  -->
+		limit #{startRow},#{rows}
+	</select>
+	
+	<resultMap type="entity.Post" id="qpAll">
+		<id column="p_id" property="post_id"/>
+		<result column="p_pushtime" property="post_pushtime"/>
+		<result column="p_content" property="post_content"/>
+		<result column="p_username" property="user_name"/>
+		<result column="p_topic_id" property="topic_id"/>
+		<result column="p_zan" property="zan"/>
+		<collection property="replys" ofType="entity.Reply">
+			<id column="r_id" property="reply_id"/>
+			<result column="r_content" property="reply_content"/>
+			<result column="r_reply_time" property="reply_time"/>
+			<result column="r_username" property="user_name"/>
+			<result column="r_post_id" property="post_id"/>
+		</collection>
+	</resultMap> 
+	<select id="queryAllPosts" resultMap="qpAll">
+		select  
+		bp.post_id p_id,bp.post_pushtime p_pushtime,bp.post_content p_content,bp.user_name p_username,bp.topic_id p_topic_id,bp.zan p_zan,
+		br.reply_id r_id,br.reply_content r_content,br.reply_time r_reply_time,br.user_name r_username,br.post_id r_post_id 
+		from bbs_post bp 
+		LEFT JOIN bbs_reply br 
+		on bp.post_id=br.post_id 
+		<!-- where bp.topic_id=#{topicId}  -->
+		<!-- limit #{startRow},#{rows} -->
+	</select>
+	
+	<delete id="deletePosts">
+		delete from bbs_post where topic_id in (select topic_id from bbs_topic where model_id=#{model_id})
+	</delete>
+	
+	<delete id="deletePostByTopic">
+		delete from bbs_post where topic_id=#{topic_id}
+	</delete>
+	
+	<delete id="deleteOnePost">
+		delete from bbs_post where post_id=#{post_id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+

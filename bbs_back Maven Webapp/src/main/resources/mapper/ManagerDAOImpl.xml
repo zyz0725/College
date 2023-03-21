@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.ManagerDAO">
+
+
+    <select id="selectOneManager" resultType="Manager">
+        select * from bbs_manager
+        where manager_name=#{manager_name}
+    </select>
+
+	
+	<select id="selectManagerByPage" resultType="Manager">
+        select * from bbs_manager
+        limit #{startRow},#{rows}
+    </select>
+    
+    <select id="selectAllManagers" resultType="Manager">
+        select * from bbs_manager
+    </select>
+    
+    <update id="updateDetail">
+    	update bbs_manager set manager_pwd=#{manager_pwd},jurisdiction=#{jurisdiction} where manager_name =#{manager_name}
+    </update>
+    
+    <insert id="insertManager">
+    	insert into bbs_manager VALUES(#{manager_name},#{manager_pwd},#{jurisdiction})
+    </insert>
+    
+    <delete id="deleteManager">
+    	delete from bbs_manager where manager_name=#{manager_name}
+    </delete>
+</mapper>
+
+
+
+
+
+
+
+

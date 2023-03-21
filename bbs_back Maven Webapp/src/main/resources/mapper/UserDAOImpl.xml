@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.UserDAO">
+
+
+    <select id="selectUsersByPage" resultType="User">
+        select * from bbs_user
+        limit #{startRow},#{rows}
+    </select>
+
+    <select id="selectAllUsers" resultType="User">
+        select * from bbs_user
+    </select>
+
+	<select id="selectOneUser" resultType="User">
+		select * from bbs_user where user_name=#{user_name}
+	</select>
+    <insert id="insertUsers">
+      insert into bbs_user
+      (user_name,user_pwd,qq,province,city,sex,register_time,last_time)
+        VALUES
+        <foreach collection="users" item="user"  separator="," >
+          (#{user.user_name},#{user.user_pwd},#{user.qq,jdbcType=VARCHAR},
+          #{user.province,jdbcType=VARCHAR},#{user.city,jdbcType=VARCHAR},
+          #{user.sex,jdbcType=VARCHAR},#{user.register_time},#{user.last_time})
+        </foreach>
+    </insert>
+    
+    <select id="selectMans" resultType="dto.China">
+        SELECT province,count(*) count FROM bbs_user WHERE sex="男" GROUP BY province
+    </select>
+
+    <select id="selectWomen" resultType="dto.China">
+        SELECT province,count(*) count FROM bbs_user WHERE sex="女" GROUP BY province
+    </select>
+    
+    <select id="selectSexes" resultType="dto.Sex">
+    	SELECT sex,count(*) count FROM bbs_user GROUP BY sex
+    </select>
+    
+    <update id="updateUser">
+    	update bbs_user set qq=#{qq},province=#{province},city=#{city},sex=#{sex} where user_name =#{user_name}
+    </update>
+</mapper>
+
+
+
+
+
+
+
+

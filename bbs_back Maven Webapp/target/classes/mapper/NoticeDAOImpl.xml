@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.NoticeDAO">
+
+
+    <select id="queryAllNotices" resultType="Notice">
+        select * from bbs_notice
+    </select>
+
+	<delete id="delete">
+		delete from bbs_notice where notice_id=#{notice_id}
+	</delete>
+	
+	<update id="uodateNotice">
+		update bbs_notice set notice_title=#{notice_title},notice_content=#{notice_content},notice_time=#{notice_time} where notice_id =#{notice_id}
+	</update>
+	
+	<insert id="addNotice">
+		 insert into bbs_notice VALUES(#{notice_id},#{notice_title},#{notice_content},#{notice_time})
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+

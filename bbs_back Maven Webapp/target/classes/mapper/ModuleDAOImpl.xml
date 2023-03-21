@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.ModuleDAO">
+
+    <resultMap type="Module" id="allMod">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="iconcls" property="iconcls"/>
+        <result column="href" property="href"/>
+        <result column="parentid" property="parentid"/>
+        <collection property="moduls" ofType="Module">
+            <id column="m2_id" property="id"/>
+            <result column="m2_name" property="name"/>
+            <result column="m2_iconcls" property="iconcls"/>
+            <result column="m2_href" property="href"/>
+            <result column="m2_parent" property="parentid"/>
+        </collection>
+    </resultMap>
+    <select id="selectAll" resultMap="allMod">
+        select m1.id,m1.name,m1.iconcls,m1.href,m1.parentid,
+               m2.id m2_id,m2.name m2_name,m2.iconcls m2_iconcls,m2.href m2_href,m2.parentid m2_parent
+		from bbs_left m1 left join bbs_left m2
+		on m1.id = m2.parentid
+		where m1.parentid is null
+    </select>
+
+
+<!--	<resultMap type="Category" id="allCate">
+		<id column="cid" property="cid"/>
+		<result column="name" property="name"/>
+		<result column="count" property="count"/>
+		<result column="parent_cid" property="parent_cid"/>
+		<collection property="secondCate" ofType="entity.Category">
+			<id column="c2_cid" property="cid"/>
+			<result column="c2_name" property="name"/>
+			<result column="c2_count" property="count"/>
+			<result column="c2_parent" property="parent_cid"/>
+		</collection>
+	</resultMap> 
+	<select id="queryAllCate" resultMap="allCate">
+		select c1.cid,c1.name,c1.count,c1.parent_cid,c2.cid c2_cid,c2.name c2_name,c2.count c2_count,c2.parent_cid c2_parent  
+		from d_category c1 left join d_category c2
+		on c1.cid = c2.parent_cid
+		where c1.parent_cid is null
+	</select> 
+    
+    <select id="queryFirstCate" resultType="Category">
+    	select * from d_category where parent_cid is null
+    </select>
+    
+    <insert id="insertNewCate">
+    	<selectKey resultType="java.lang.Integer" keyProperty="cid" order="BEFORE">
+   		select d_category_seq.nextval from dual
+   		</selectKey>
+    	insert into d_category values(#{cid},#{name},#{count},
+    	<if test="parent_cid==0">null</if>
+    	<if test="parent_cid!=0">#{parent_cid}</if>
+    	)  	
+    </insert>
+    
+    <select id="querySecondCate" resultType="Category">
+    	select * from d_category where parent_cid is not null
+    </select>-->
+</mapper>
+
+
+
+
+
+
+
+

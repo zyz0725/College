@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.ModelDAO">
+
+    <select id="selectAllModels" resultType="Model">
+        select * from bbs_model
+    </select>
+
+  <!--  <select id="selectCount" resultType="java.lang.Integer">
+        select count(*) from cmfz_picture
+    </select>
+
+    <update id="updatePageDetail" parameterType="Page">
+        update cmfz_picture set description=#{description},status=#{status} where id =#{id}
+    </update>
+-->
+
+    <insert id="insertNewModel">
+        <selectKey keyProperty="id" resultType="java.lang.Integer" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    	  insert into bbs_model values(#{model_id},#{model_name},#{model_desc},#{model_img})
+    </insert>
+
+	<delete id="removeModel">
+		delete from bbs_model where model_id=#{model_id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.TopicDAO">
+
+
+    <select id="queryAllTopics" resultType="Topic">
+        select * from bbs_topic
+    </select>
+	
+	<select id="queryTopicsByPage" resultType="Topic">
+        select * from bbs_topic
+        limit #{startRow},#{rows}
+    </select>
+	
+	<select id="countAllTopics" resultType="java.lang.Integer">
+		select count(*) from bbs_topic where model_id=#{model_id}
+	</select>
+	
+	<delete id="removeTopic">
+		delete from bbs_topic where topic_id=#{topic_id}
+	</delete>
+	
+	<delete id="removeTopics">
+		delete from bbs_topic where model_id=#{model_id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+

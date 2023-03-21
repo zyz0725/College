@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.ReplyDAO">
+
+
+    <!-- <select id="queryAllPosts" resultType="Post">
+        select * from bbs_post where topic_id=#{topic_id} limit #{begin},10
+    </select> -->
+	
+	
+	<delete id="deleteByModel">
+		delete from bbs_reply where post_id in (select post_id from bbs_post where topic_id in (select topic_id from bbs_topic where model_id=#{model_id}))
+	</delete>
+	
+	<delete id="deleteByTopic">
+		delete from bbs_reply where post_id in (select post_id from bbs_post where topic_id=#{topic_id})
+	</delete>
+	
+	<delete id="deleteByPosts">
+		delete from bbs_reply where post_id=#{post_id}
+	</delete>
+	
+	<delete id="deleteById">
+		delete from bbs_reply where reply_id=#{reply_id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
