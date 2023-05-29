@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.ManagerDAO">
+	
+
+	<select id="login" resultType="Manager" parameterType="java.lang.String">
+		select * from ems_manager where username=#{username}
+	</select>   
+    
+    <insert id="register" parameterType="Manager">
+    	insert into ems_manager (username,password) values(#{username},#{password})
+    </insert>
+</mapper>
+
+
+
+
+
+
+
+

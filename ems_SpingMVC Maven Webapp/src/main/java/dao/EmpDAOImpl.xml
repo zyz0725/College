@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.EmpDAO">
+	<resultMap type="Emp" id="emps">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="salary" property="salary"/>
+		<result column="married" property="married"/>
+		<association property="dept" javaType="Dept">
+			<id column="did" property="did"/>
+			<result column="deptname" property="deptname"/>
+		</association>
+	</resultMap>
+	<select id="queryAllEmp" resultMap="emps">
+		select e.id,e.name,e.salary,e.married,d.did,d.deptname 
+		from ems_ssm e left join dept_ssm d
+		on e.did=d.did
+	</select>
+
+   <insert id="insertEmp" parameterType="Emp">
+   	<selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE">
+   		select ems_ssm_seq.nextval from dual
+   	</selectKey>
+   	insert into ems_ssm values(#{id},#{name},#{salary},#{married01},#{dept.did})
+   </insert>
+    
+   <delete id="deleteOneEmp" parameterType="java.lang.Integer">
+   	delete from ems_ssm where id=#{id}
+   </delete>
+   
+   <select id="queryOneEmp" resultMap="emps">
+   	select e.id,e.name,e.salary,e.married,d.did,d.deptname 
+		from ems_ssm e left join dept_ssm d
+		on e.did=d.did
+		 where id=#{id}
+   </select>
+   
+   <update id="updateEmp" parameterType="Emp" >
+   	update ems_ssm set name=#{name},salary=#{salary},married=#{married01},did=#{dept.did} where id =#{id}
+   </update>
+</mapper>
+
+
+
+
+
+
+
+
